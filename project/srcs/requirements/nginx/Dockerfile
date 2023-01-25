@@ -7,7 +7,7 @@ RUN		apk add nginx
 
 RUN		mkdir -p /var/www/html/
 
-COPY	conf/nginx.conf /etc/nginx/conf.d
+#COPY	conf/nginx.conf /etc/nginx/conf.d
 
 #==== OPENSSL =================================================================#
 RUN		apk add openssl
@@ -20,13 +20,14 @@ RUN		openssl req \
 		-days 365 \
 		-nodes \
 		-subj "/C=FR/ST=PACA/L=Nice/O=42/OU=acoezard/CN=localhost" \
-		-keyout /etc/nginx/ssl/inception.key \
-		-out /etc/nginx/ssl/inception.cert
+		-keyout /etc/nginx/ssl/qxia.42.fr.key \
+		-out /etc/nginx/ssl/qxia.42.fr.cert
 
 #==== OPENRC ==================================================================#
 RUN		apk add openrc
 RUN		rc-update add nginx default
 
 #==============================================================================#
+#COPY conf/nginx.conf /etc/nginx/conf.d
 EXPOSE	443
 CMD		["nginx", "-g", "daemon off;"]
