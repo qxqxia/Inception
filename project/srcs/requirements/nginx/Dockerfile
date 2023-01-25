@@ -7,7 +7,7 @@ RUN		apk add nginx
 
 RUN		mkdir -p /var/www/html/
 
-COPY	conf/nginx.conf /etc/nginx/http.d/nginx.conf
+#COPY	conf/nginx.conf /etc/nginx/http.d/nginx.conf
 
 #==== OPENSSL =================================================================#
 RUN		apk add openssl
