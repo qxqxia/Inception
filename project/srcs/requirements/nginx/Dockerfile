@@ -7,8 +7,6 @@ RUN		apk add nginx
 
 RUN		mkdir -p /var/www/html/
 
-#COPY	conf/nginx.conf /etc/nginx/http.d/nginx.conf
-
 #==== OPENSSL =================================================================#
 RUN		apk add openssl
 RUN		mkdir -p /etc/nginx/ssl
@@ -19,9 +17,9 @@ RUN		openssl req \
 		-sha256 \
 		-days 365 \
 		-nodes \
-		-subj "/C=FR/ST=PACA/L=Nice/O=42/OU=acoezard/CN=localhost" \
-		-keyout /etc/nginx/ssl/qxia.42.fr.key \
-		-out /etc/nginx/ssl/qxia.42.fr.cert
+		-subj "/C=FR/ST=Paris/L=Paris/O=Ecole42/CN=localhost" \
+		-keyout /etc/nginx/ssl/inception.key \
+		-out /etc/nginx/ssl/inception.crt
 
 #==== OPENRC ==================================================================#
 RUN		apk add openrc
