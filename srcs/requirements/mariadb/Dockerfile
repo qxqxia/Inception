@@ -23,6 +23,4 @@ EXPOSE 3306
 COPY requirements/mariadb/conf/create_db.sh .
 RUN sh create_db.sh && rm create_db.sh
 USER mysql
-# COPY tools/db.sh .
-# ENTRYPOINT ["sh", "db.sh"]
 CMD ["/usr/bin/mysqld", "--skip-log-error"]
