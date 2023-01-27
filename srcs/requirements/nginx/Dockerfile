@@ -21,11 +21,8 @@ RUN		openssl req \
 		-keyout /etc/nginx/ssl/inception.key \
 		-out /etc/nginx/ssl/inception.crt
 
-#==== OPENRC ==================================================================#
 RUN		apk add openrc
 RUN		rc-update add nginx default
 
-#==============================================================================#
-#COPY conf/nginx.conf /etc/nginx/conf.d
 EXPOSE	443
 CMD		["nginx", "-g", "daemon off;"]
