@@ -14,7 +14,6 @@ services:
       - inception
     volumes:
       - ./requirements/nginx/conf/:/etc/nginx/http.d/
-        #- ./requirements/nginx/tools:/etc/nginx/ssl/
       - wp-volume:/var/www
     restart: always
 
@@ -28,12 +27,8 @@ services:
         DB_PASS: ${DB_PASS}
         DB_ROOT: ${DB_ROOT}
     container_name: mariadb
-      #ports:
-      #- "3306:3306"
     networks:
       - inception
-#    volumes:
- #     - db_volume:/var/lib/mysql
     restart: always
 
   wordpress:
