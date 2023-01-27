@@ -2,6 +2,7 @@ version: '3'
 
 services:
   nginx:
+    image: nginx:v1
     build:
       context: .
       dockerfile: requirements/nginx/Dockerfile
@@ -18,6 +19,7 @@ services:
     restart: always
 
   mariadb:
+    image: mariadb:v1
     build:
       context: .
       dockerfile: requirements/mariadb/Dockerfile
@@ -32,6 +34,7 @@ services:
     restart: always
 
   wordpress:
+    image: wordpress:v1
     build:
       context: .
       dockerfile: requirements/wordpress/Dockerfile
