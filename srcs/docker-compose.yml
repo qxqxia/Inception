@@ -2,67 +2,60 @@ version: '3'
 
 services:
   nginx:
+    build: ./requirements/nginx
     image: nginx:v1
-    build:
-      context: .
-      dockerfile: requirements/nginx/Dockerfile
     container_name: nginx
-    env_file:
-      - .env
     depends_on:
       - wordpress
     ports:
-      - 443:443
+      - "443:443"
+    volumes:
+      - wp_volume:/var/www/html
+    restart: always
     networks:
       - inception
+
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress:v1
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
     volumes:
-      - ./requirements/nginx/conf/:/etc/nginx/http.d/
-      - wp-volume:/var/www
+      - wp_volume:/var/www/html
     restart: always
+    networks:
+      - inception
 
   mariadb:
+    build: ./requirements/mariadb
     image: mariadb:v1
-    build:
-      context: .
-      dockerfile: requirements/mariadb/Dockerfile
     container_name: mariadb
     env_file:
       - .env
-    networks:
-      - inception
     volumes:
-      - db-volume:/var/lib/mysql
-    restart: always
-
-  wordpress:
-    image: wordpress:v1
-    build:
-      context: .
-      dockerfile: requirements/wordpress/Dockerfile
-    container_name: wordpress
-    env_file:
-      - .env
-    depends_on:
-      - mariadb
+      - db_volume:/var/lib/mysql
     restart: always
     networks:
       - inception
-    volumes:
-      - wp-volume:/var/www
 
 volumes:
-  wp-volume:
+  db_volume:
+    driver: local
     driver_opts:
-      o: bind
       type: none
-      device: /home/qxia/data/wordpress
-
-  db-volume:
+      device: /home/${USER}/data/mariadb
+      # bind mount, because is a special path outside volume docker area, can access from host machine
+      o: bind
+  wp_volume:
+    driver: local
     driver_opts:
-      o: bind
       type: none
-      device: /home/qxia/data/mariadb
+      device: /home/${USER}/data/wordpress
+      o: bind
 
 networks:
-    inception:
-      driver: bridge
+  inception:
+    driver: bridge
